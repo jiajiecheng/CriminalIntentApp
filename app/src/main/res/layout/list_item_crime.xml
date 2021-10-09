@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:layout_marginBottom="1.5dp"
+    android:padding="8dp">
+
+    <TextView
+        android:textSize="16sp"
+        android:id="@+id/crime_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:layout_toLeftOf="@id/crime_solved"
+        android:paddingRight="4dp"
+        android:text="Crime Title" />
+
+    <TextView
+        android:textSize="14sp"
+        android:id="@+id/crime_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/crime_title"
+        android:layout_margin="2dp"
+        android:layout_toLeftOf="@id/crime_solved"
+        android:text="Crime Date" />
+
+    <ImageView
+        android:id="@+id/crime_solved"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/suolian1" />
+
+
+</RelativeLayout>
