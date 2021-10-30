@@ -2,6 +2,7 @@ package com.example.criminalintent.activitys;
 
 import android.os.Bundle;
 
+import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -15,13 +16,17 @@ import com.example.criminalintent.R;
  */
 
 public abstract class  SingleFragmentActivity extends AppCompatActivity {
+    @LayoutRes
+    protected int getLayoutId(){
+        return R.layout.activity_masterdetail;
+    }
     //抽象方法，继承此类必须要实现
     protected abstract Fragment createFragment();
 
     @Override
     protected void onCreate(@Nullable  Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_frgment);
+        setContentView(getLayoutId());
         FragmentManager fm= getSupportFragmentManager();
         Fragment fragment =fm.findFragmentById(R.id.fragment_container);
         //如果对应的视图中没有Fragment就添加一个Fragment

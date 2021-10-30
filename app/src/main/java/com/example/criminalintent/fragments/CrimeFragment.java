@@ -1,6 +1,7 @@
 package com.example.criminalintent.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -39,9 +40,13 @@ import com.example.criminalintent.classs.CrimeLab;
 import com.example.criminalintent.classs.PictureUtils;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import static android.widget.CompoundButton.*;
@@ -73,6 +78,29 @@ public class CrimeFragment extends Fragment {
     //用于展示大图
     private static final int REQUEST_PHOTO = 3;
     private static final String DIALOG_PHOTO = "DialogPhoto";
+
+    private Callback mCallback;
+    //回调接口
+    public interface Callback{
+        void onCrimeUpdated(Crime crime);
+    }
+
+    @Override
+    public void onAttach(@NonNull  Context context) {
+        super.onAttach(context);
+        mCallback= (Callback) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallback=null;
+    }
+    private void updateCrime(){
+        CrimeLab.get(getActivity()).upDateCrime(mCrime);
+        mCallback.onCrimeUpdated(mCrime);
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,6 +150,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mCrime.setTitle(s.toString());
+                updateCrime();
             }
 
             @Override
@@ -134,6 +163,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mCrime.setSolved(isChecked);
+                updateCrime();
             }
         });
 
@@ -229,6 +259,7 @@ public class CrimeFragment extends Fragment {
         if (requestCode == REQUEST_DATE) {
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mCrime.setDate(date);
+            updateCrime();
             updateDate();
         }else if (requestCode == REQUEST_CONTACT && data != null){
             Uri contactUri = data.getData();
@@ -243,6 +274,7 @@ public class CrimeFragment extends Fragment {
                 c.moveToFirst();
                 String suspect  = c.getString(0);
                 mCrime.setSuspect(suspect);
+                updateCrime();
                 mSuspectButton.setText(suspect);
             }finally {
                 c.close();
@@ -250,6 +282,7 @@ public class CrimeFragment extends Fragment {
         }else if (requestCode == REQUEST_PHONE){
             Uri uri = FileProvider.getUriForFile(getActivity(),"com.example.criminalintent.fileprovider",mPhoneFile);
             getActivity().revokeUriPermission(uri,Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            updateCrime();
             upDatePhoneView();
         }
     }

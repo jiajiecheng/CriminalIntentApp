@@ -1,5 +1,6 @@
 package com.example.criminalintent.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -39,10 +40,27 @@ public class CrimeListFragment extends Fragment {
     private CrimeAdapter mAdapter;
     //标题与小标题隐藏与显示的标志位
     private boolean mSubtitleVisible;
+    private Callback mCallback;
 
 
     //用于恢复数据
     private static final String SAVED_SUBTITLE_VISIBLE="subtitle";
+    //回调接口
+    public interface Callback{
+        void onCrimeSelected(Crime crime);
+    }
+
+    @Override
+    public void onAttach(@NonNull  Context context) {
+        super.onAttach(context);
+        mCallback= (Callback) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallback=null;
+    }
 
     @Nullable
     @Override
@@ -58,7 +76,7 @@ public class CrimeListFragment extends Fragment {
         return view;
     }
 
-    private void upDataUI() {
+    public void upDataUI() {
         //获得单例对象中的数据，并且设置mCrimeRecyclerView适配器
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
@@ -97,8 +115,7 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
-            startActivity(intent);
+            mCallback.onCrimeSelected(mCrime);
         }
     }
 
@@ -166,8 +183,8 @@ public class CrimeListFragment extends Fragment {
             case R.id.new_crime:
                 Crime crime=new Crime();
                 CrimeLab.get(getActivity()).add(crime);
-                Intent intent=CrimePagerActivity.newIntent(getActivity(),crime.getId());
-                startActivity(intent);
+                upDataUI();
+                mCallback.onCrimeSelected(crime);
                 return true;
             case R.id.show_subtitle:
                 mSubtitleVisible = ! mSubtitleVisible;

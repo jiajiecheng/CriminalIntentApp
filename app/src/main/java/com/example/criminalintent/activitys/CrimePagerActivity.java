@@ -15,11 +15,12 @@ import com.example.criminalintent.R;
 import com.example.criminalintent.classs.Crime;
 import com.example.criminalintent.classs.CrimeLab;
 import com.example.criminalintent.fragments.CrimeFragment;
+import com.example.criminalintent.fragments.CrimeListFragment;
 
 import java.util.List;
 import java.util.UUID;
 
-public class CrimePagerActivity extends AppCompatActivity {
+public class CrimePagerActivity extends AppCompatActivity implements CrimeFragment.Callback {
     private static final String EXTRA_CRIME_ID= "com.example.criminalintent.crimePagerActivity.crime_id";
     private ViewPager mViewPager;
     private List<Crime> mCrimes;
@@ -58,5 +59,10 @@ public class CrimePagerActivity extends AppCompatActivity {
         Intent intent=new Intent(context,CrimePagerActivity.class);
         intent.putExtra(EXTRA_CRIME_ID,crimeId);
         return intent;
+    }
+
+    @Override
+    public void onCrimeUpdated(Crime crime) {
+
     }
 }

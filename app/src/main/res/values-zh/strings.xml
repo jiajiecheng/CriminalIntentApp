@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <string name="app_name">记事本</string>
+        <string name="crime_title_hint">Crime简短描述</string>
+        <string name="crime_title_label">标题</string>
+        <string name="crime_details_label">明细</string>
+        <string name="crime_solved_label">是否解决</string>
+        <string name="date_picker_title">Crime发生的日期:</string>
+        <string name="new_crime">新增Crime记录</string>
+        <string name="show_subtitle">显示子标题</string>
+        <string name="hide_subtitle">隐藏子标题</string>
+        <string name="subtitle_format">%1$s 个Crimes</string>
+        <string name="crime_suspect_text">嫌疑人联系方式</string>
+        <string name="crime_report_text">抗议或者投诉</string>
+        <!--  下面的字符串我们的使用格式化样式来进行展示  -->
+        <string name="crime_report">%1$s!
+        Crime发生于%2$s日。 %3$s,并且%4$s;
+    </string>
+        <string name="crime_report_solved">问题已经解决</string>
+        <string name="crime_report_unsolved">问题尚未解决</string>
+        <string name="crime_report_no_suspect">没有找到嫌疑人</string>
+        <string name="crime_report_suspect">嫌疑人是%s</string>
+        <string name="crime_report_subject">Crime处理报告</string>
+        <string name="send_report">投诉方式</string>
+
+</resources>
